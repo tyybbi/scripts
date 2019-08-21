@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# pull-all updates Vim plugins that have been installed via git and use Vim's
+# native package loading system. Edit PLUGIN_DIR variable accordingly.
+
+PLUGIN_DIR="$HOME/.vim/pack/plugins"
+
+update () {
+    for i in $(ls -dl "$1"/*/.git | awk '{ print $9 }' | cut -d"/" -f-2); do
+        cd "$i"
+        echo "$ git pull $i"
+        git pull
+        cd $PLUGIN_DIR
+    done
+}
+
+cd $PLUGIN_DIR
+
+[ -d "start" ] && update "start" || echo "No start directory found."
+[ -d "opt" ] && update "opt" || echo "No opt directory found."
+
