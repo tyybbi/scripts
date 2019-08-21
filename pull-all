@@ -8,7 +8,7 @@ PLUGIN_DIR="$HOME/.vim/pack/plugins"
 update () {
     for i in $(ls -dl "$1"/*/.git | awk '{ print $9 }' | cut -d"/" -f-2); do
         cd "$i"
-        echo "$ git pull $i"
+        echo "\$ git pull $i"
         git pull
         cd $PLUGIN_DIR
     done
