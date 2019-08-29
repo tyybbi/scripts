@@ -98,7 +98,7 @@ done
 
 if [ $PKGS_OBSOLETE -ne 0 ]; then
     OBS_PERCENT=$(echo "scale=5; ($PKGS_OBSOLETE/$PKGS_TOTAL)*100" | bc -lq | xargs printf "%1.2f")
-    printf "%6s %% \t not in any repo \t %d \t    \"   \n" $OBS_PERCENT $PKGS_OBSOLETE
+    printf "%6s %% \t not in any repo \t %1d \t    \"   \n" $OBS_PERCENT $PKGS_OBSOLETE
 fi
 
 echo "$H2_SEP"
