@@ -52,6 +52,10 @@ show_obsolete_pkgs() {
     echo "$H2_SEP"
 }
 
+cleanup() {
+    rm "$TMPFILE"
+}
+
 if [ "$1" ] && [ "$1" == "-h" -o "$1" == "--help" ]; then
     usage
     exit 0
@@ -113,7 +117,7 @@ fi
 printf "100.00 %% \t total \t %17d \t packages\n" "$PKGS_TOTAL"
 echo "$H2_SEP"
 
-rm "$TMPFILE"
+trap cleanup EXIT
 
 exit 0
 
