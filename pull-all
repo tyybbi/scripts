@@ -5,16 +5,17 @@
 
 PLUGIN_DIR="$HOME/.vim/pack/plugins"
 
-update () {
+update() {
+    local i
     for i in $(ls -dl "$1"/*/.git | awk '{ print $9 }' | cut -d"/" -f-2); do
         cd "$i"
         echo "\$ git pull $i"
         git pull
-        cd $PLUGIN_DIR
+        cd "$PLUGIN_DIR"
     done
 }
 
-cd $PLUGIN_DIR
+cd "$PLUGIN_DIR"
 
 [ -d "start" ] && update "start" || echo "No start directory found."
 [ -d "opt" ] && update "opt" || echo "No opt directory found."
