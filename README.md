@@ -1,10 +1,11 @@
 # scripts
 
-Mostly shell scripts.
+Little utility scripts written in Bash or Python for author's own entertainment.
 
 ## distrostate
 
-A script to check how mixed (or unmixed) your Debian installation is.
+A script to check how mixed (or unmixed) your Debian installation is. More
+useful if you're running testing/unstable rather than stable.
 
 ## lenormand
 
