@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-set -e
+set -o errexit
+set -o noclobber
+set -o nounset
+set -o pipefail
 
 SCRIPTNAME="distrostate"
-VERSION="1.1.0"
+VERSION="1.2.0"
 OS_INFO=$(awk -F'=' '/^NAME/ { print $2 }' /etc/os-release | tr -d '"')
 OS_VERSION=$(cat /etc/debian_version)
 OS_NAME=$(awk -F'=' '/VERSION_CODENAME/ { print $2 }' /etc/os-release | tr -d '"')
@@ -56,12 +59,12 @@ cleanup() {
     rm "$TMPFILE"
 }
 
-if [ "$1" ] && [ "$1" == "-h" -o "$1" == "--help" ]; then
+if [ "$#" -ge 1 ] && [ "$1" == "-h" -o "$1" == "--help" ]; then
     usage
     exit 0
 fi
 
-if [ "$1" ] && [ "$1" == "-V" -o "$1" == "--version" ]; then
+if [ "$#" -ge 1 ] && [ "$1" == "-V" -o "$1" == "--version" ]; then
     version
     exit 0
 fi
@@ -78,7 +81,7 @@ if [ ! -x /usr/bin/bc ]; then
 fi
 
 TMPFILE=$(mktemp -p "$HOME" "$SCRIPTNAME".XXXXXXXX --suffix=.tmp)
-apt-show-versions | fgrep -v " not installed" > "$TMPFILE"
+apt-show-versions | fgrep -v " not installed" >| "$TMPFILE"
 
 PKGS_TOTAL=$(wc -l "$TMPFILE" | cut -d" " -f1)
 PKGS_OBSOLETE=$(grep "installed: No available version\|newer than" "$TMPFILE" | wc -l)
@@ -110,7 +113,7 @@ fi
 
 echo "$H2_SEP"
 
-if [ "$1" ] && [ "$1" == "-m" -o "$1" == "--show-missing" ]; then
+if [ "$#" -ge 1 ] && [ "$1" == "-m" -o "$1" == "--show-missing" ]; then
     show_obsolete_pkgs
 fi
 
