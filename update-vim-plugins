@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# pull-all updates Vim plugins that have been installed via git and use Vim's
-# native package loading system. Edit PLUGIN_DIR variable accordingly.
+# update-vim-plugins runs "git pull" in every Vim plugin directory. It uses
+# Vim's native package loading system. Edit PLUGIN_DIR variable accordingly.
 
 PLUGIN_DIR="$HOME/.vim/pack/plugins"
 
