@@ -11,7 +11,7 @@ useful if you're running testing/unstable rather than stable.
 
 Randomize a Lenormand spread of any size (1-36).
 
-## pull-all
+## update-vim-plugins
 
 Simple script to update Vim plugins that are installed via git. It basically
 does "git pull" in each plugin directory that has a .git directory in it.
