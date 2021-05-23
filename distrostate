@@ -49,7 +49,7 @@ show_obsolete_pkgs() {
 
     echo "Packages not in any repo"
     for i in $LIST_OBSOLETE ; do
-        printf "\t"$i"\n"
+        printf "\t%s\n" "$i"
     done
     echo "$H2_SEP"
 }
@@ -80,7 +80,7 @@ if [ ! -x /usr/bin/bc ]; then
 fi
 
 TMPFILE=$(mktemp -p "$HOME" "$SCRIPTNAME".XXXXXXXX --suffix=.tmp)
-apt-show-versions | fgrep -v " not installed" >| "$TMPFILE"
+apt-show-versions | grep -F -v " not installed" >| "$TMPFILE"
 
 PKGS_TOTAL=$(wc -l "$TMPFILE" | cut -d" " -f1)
 PKGS_OBSOLETE=$(grep "installed: No available version\|newer than" "$TMPFILE" | wc -l)
@@ -95,19 +95,19 @@ first_run=true
 
 for line in $REPO_NAMES
 do
-    NUM_PKGS=$(grep "/$line" "$TMPFILE" | wc -l)
+    NUM_PKGS=$(grep -c "/$line" "$TMPFILE")
     PERCENT=$(echo "scale=5; ($NUM_PKGS/$PKGS_TOTAL)*100" | bc -lq | xargs printf "%1.2f")
     if [ $first_run = true ]; then
-        printf "%6s %% \t %-10s \t %9d \t packages\n" $PERCENT $line $NUM_PKGS
+        printf "%6s %% \t %-10s \t %9d \t packages\n" "$PERCENT" "$line" "$NUM_PKGS"
     else
-        printf "%6s %% \t %-10s \t %d \t    \"   \n" $PERCENT $line $NUM_PKGS
+        printf "%6s %% \t %-10s \t %d \t    \"   \n" "$PERCENT" "$line" "$NUM_PKGS"
     fi
     first_run=false
 done
 
-if [ $PKGS_OBSOLETE -ne 0 ]; then
+if [ "$PKGS_OBSOLETE" -ne 0 ]; then
     OBS_PERCENT=$(echo "scale=5; ($PKGS_OBSOLETE/$PKGS_TOTAL)*100" | bc -lq | xargs printf "%1.2f")
-    printf "%6s %% \t not in any repo \t %d \t    \"   \n" $OBS_PERCENT $PKGS_OBSOLETE
+    printf "%6s %% \t not in any repo \t %d \t    \"   \n" "$OBS_PERCENT" "$PKGS_OBSOLETE"
 fi
 
 echo "$H2_SEP"
