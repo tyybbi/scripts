@@ -7,7 +7,7 @@ PLUGIN_DIR="$HOME/.vim/pack/plugins"
 
 update() {
     local i
-    for i in $(find "$i" -type d -name ".git" | cut -d"/" -f-2); do
+    for i in $(find "$1" -type d -name ".git" | cut -d"/" -f-2); do
         cd "$i"
         echo "\$ git pull $i"
         git pull
