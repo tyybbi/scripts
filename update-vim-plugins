@@ -9,7 +9,7 @@ update() {
     local i
     for i in $(find "$1" -type d -name ".git" | cut -d"/" -f-2); do
         cd "$i"
-        echo "\$ git pull --rebase=false $i"
+        echo "\$ git pull --rebase $i"
         git pull --rebase=false
         cd "$PLUGIN_DIR"
     done
