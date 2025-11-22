@@ -1,3 +1,5 @@
+*Migrated to [Codeberg.org](https://codeberg.org/tyybbi/scripts)*
+
 # scripts
 
 Little utility scripts written in Bash or Python for author's own entertainment.
